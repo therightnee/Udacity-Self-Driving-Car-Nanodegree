@@ -46,7 +46,7 @@ The approach can be broken up into two major elements. First determing the lines
                 right_y_sum.append(y1, y2)
 ```
 
-Here each of the lines in the image is looped through and its slope claculated. If the slope is positive it is a designated as a right side line, and if it is negative a left side line. The number of lines in that set is increment, and the total sum of the x and y values calculated. This sum will be used in the average in the next section.
+Here each of the lines in the image is looped through and its slope claculated. If the slope is positive it is a designated as a right side line, and if it is negative a left side line. After sorting the relevant data, the slope and each of the four points, are appended to an existing array, which will be averaged when calculating the line.
 
 ```
     #Caclulate the start and end-points of the line
