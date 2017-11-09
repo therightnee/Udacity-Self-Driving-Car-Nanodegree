@@ -27,7 +27,7 @@ My pipeline is as follows:
 
 Each step was tuned to minimize artifacts and maximize the amount of lane line recognized. The Hough Line transform was the most difficult for me to conceptualize, but certainly offered the most flexibility and precision in lane detection.
 
-I found the instructions on the `draw_line` function vague and difficult to understand. It was incredibly helpful to look through previous student's work and see how they approached the problem, particularly the work done by [Raymond U Chen](https://github.com/raymonduchen/CarND-P1-Finding-Lane-Line). My final approach follows the same method Raymond outlines, although I reduced the y-axis length to avoid artifcats generated at the horizon, and increased the upper bound of the right lane slope, in the attempt to adjust the final line's slope to be steeper.
+I found the instructions on the `draw_line` function vague and difficult to understand. It was incredibly helpful to look through previous students' work and see how they approached the problem. I found the work done by [Raymond U Chen](https://github.com/raymonduchen/CarND-P1-Finding-Lane-Line) and [Ashish Rana](https://github.com/Ashish-Rana/Simple-Lane-Detection/blob/master/P1.ipynb) particularly helpful. My final approach follows the same method Raymond outlines, although I reduced the y-axis length to avoid artifcats generated at the horizon, and increased the upper bound of the right lane slope, in the attempt to adjust the final line's slope to be steeper.
 
 The approach can be broken up into two major elements. First determing the lines in the image.
 
@@ -75,7 +75,7 @@ Here each of the lines in the image is looped through and its slope claculated. 
         cv2.line(img, (right_x1, right_y1), (right_x2, right_y2), color=(255,255,255), thickness=3)  
 ```
 
-Here the two conditional statements return the starting and ending points for the left and right lane lines. Those start and end y-axis coordinates are hardcoded based on the image size, and used to determine the x-axis values.
+Next the two conditional statements return the starting and ending points for the left and right lane lines. Those start and end y-axis coordinates are hardcoded based on the image size, and used to determine the x-axis values.
 
 
 ### 2. Identify potential shortcomings with your current pipeline
