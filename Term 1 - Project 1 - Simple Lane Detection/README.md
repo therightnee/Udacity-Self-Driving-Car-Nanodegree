@@ -27,7 +27,7 @@ My pipeline is as follows:
 
 Each step was tuned to minimize artifacts and maximize the amount of lane line recognized. The Hough Line transform was the most difficult for me to conceptualize, but certainly offered the most flexibility and precision in lane detection.
 
-I found the instructions on the `draw_line` function vague and difficult to understand. It was incredibly helpful to look through previous student's work and see how they approached the problem. My final approach is essentially the same, although the slope recognition is tuned differently.
+I found the instructions on the `draw_line` function vague and difficult to understand. It was incredibly helpful to look through previous student's work and see how they approached the problem, particularly the work done by [Raymond U Chen](https://github.com/raymonduchen/CarND-P1-Finding-Lane-Line). My final approach follows the same method Raymond outlines, although I reduced the y-axis length to avoid artifcats generated at the horizon, and increased the upper bound of the right lane slope, in the attempt to adjust the final line's slope to be steeper.
 
 The approach can be broken up into two major elements. First determing the lines in the image.
 
