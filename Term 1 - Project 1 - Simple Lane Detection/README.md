@@ -1,56 +1,114 @@
 # **Finding Lane Lines on the Road** 
-[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
-<img src="examples/laneLines_thirdPass.jpg" width="480" alt="Combined Image" />
+**Finding Lane Lines on the Road**
 
-Overview
+The goals / steps of this project are the following:
+* Make a pipeline that finds lane lines on the road
+* Reflect on your work in a written report
+
+
+[//]: # (Image References)
+
+[image1]: ./examples/grayscale.jpg "Grayscale"
+
 ---
 
-When we drive, we use our eyes to decide where to go.  The lines on the road that show us where the lanes are act as our constant reference for where to steer the vehicle.  Naturally, one of the first things we would like to do in developing a self-driving car is to automatically detect lane lines using an algorithm.
+### Reflection
 
-In this project you will detect lane lines in images using Python and OpenCV.  OpenCV means "Open-Source Computer Vision", which is a package that has many useful tools for analyzing images.  
+### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
 
-To complete the project, two files will be submitted: a file containing project code and a file containing a brief write up explaining your solution. We have included template files to be used both for the [code](https://github.com/udacity/CarND-LaneLines-P1/blob/master/P1.ipynb) and the [writeup](https://github.com/udacity/CarND-LaneLines-P1/blob/master/writeup_template.md).The code file is called P1.ipynb and the writeup template is writeup_template.md 
+My pipeline is as follows:
 
-To meet specifications in the project, take a look at the requirements in the [project rubric](https://review.udacity.com/#!/rubrics/322/view)
+-Greyscale Conversion
+-Gaussian Blur
+-Canny Transform
+-Region Masking
+-Hough Line Transform
+
+Each step was tuned to minimize artifacts and maximize the amount of lane line recognized. The Hough Line transform was the most difficult for me to conceptualize, but certainly offered the most flexibility and precision in lane detection.
+
+I found the instructions on the `draw_line` function vague and difficult to understand. It was incredibly helpful to look through previous student's work and see how they approached the problem. My final approach is essentially the same, although the slope recognition is tuned differently.
+
+The approach can be broken up into two major elements. First determing the lines in the image.
+
+```
+    for line in lines:
+        for x1,y1,x2,y2 in line:
+            m=((y1-y2)/(x1-x2))
+            #Determine if the line is on the left or right side
+            if (m < -0.6 and m > -0.9):
+                left_m_sum += m
+                left_tick += 1
+                left_x_sum = left_x_sum + x1 + x2
+                left_y_sum = left_y_sum + y1 + y2
+            elif (m > 0.45 and m < 2):
+                right_m_sum += m
+                right_tick += 1
+                right_x_sum = right_x_sum + x1 + x2
+                right_y_sum = right_y_sum + y1 + y2
+                
+```
+
+Here each of the lines in the image is looped through and its slope claculated. If the slope is positive it is a designated as a right side line, and if it is negative a left side line. The number of lines in that set is increment, and the total sum of the x and y values calculated. This sum will be used in the average in the next section.
+
+```
+    #Caclulate the start and end-points of the line
+    #uses hardcoded y values based on the known size of the image to caluclate x values
+    if left_tick != 0 :
+        left_m = left_m_sum / left_tick
+        left_x_avg = int(left_x_sum / (2*left_tick) )
+        left_y_avg = int(left_y_sum / (2*left_tick) )  
+        left_y1 = 330
+        left_x1 = int( (left_y1 - left_y_avg)/left_m + left_x_avg )
+        left_y2 = 960
+        left_x2 = int( (left_y2 - left_y_avg)/left_m + left_x_avg )
+        cv2.line(img, (left_x1, left_y1), (left_x2, left_y2), color=(255,255,0), thickness=3)
+        
+    if right_tick != 0 :
+        right_m = right_m_sum / right_tick
+        right_x_avg = int(right_x_sum / (2*right_tick) )
+        right_y_avg = int(right_y_sum / (2*right_tick) ) 
+        right_y1 = 330
+        right_x1 = int( (right_y1 - right_y_avg)/right_m + right_x_avg )
+        right_y2 = 960
+        right_x2 = int( (right_y2 - right_y_avg)/right_m + right_x_avg )
+        cv2.line(img, (right_x1, right_y1), (right_x2, right_y2), color=(255,255,255), thickness=3)  
+```
+
+Here the two conditional statements return the starting and ending points for the left and right lane lines. Those start and end y-axis coordinates are hardcoded based on the image size, and used to determine the x-axis values.
 
 
-Creating a Great Writeup
----
-For this project, a great writeup should provide a detailed response to the "Reflection" section of the [project rubric](https://review.udacity.com/#!/rubrics/322/view). There are three parts to the reflection:
+### 2. Identify potential shortcomings with your current pipeline
 
-1. Describe the pipeline
+The first improvement I would make is to improve the `draw_lines` function. Currently it maps continuous line markers well, but when extrapolating from dashed lines there is a noticeable deviation.
 
-2. Identify any shortcomings
+Second is that my current pipeline is limited with respect to lighting conditions, lane marker hue and brightness, as well as curvature. Much of the tuning I did through the region masking and Hough Transform focuses on eliminating artifacts, but is designed for small set of cases. 
+### 3. Suggest possible improvements to your pipeline
 
-3. Suggest possible improvements
+My current thinking on how to fix this would be to change the approach of the fuction from an average of all points to averaging points within a given area and then mapping the curve that contains those points using a best fit polynomial. 
 
-We encourage using images in your writeup to demonstrate how your pipeline works.  
+Regarding the lighting conditions, I would first tune the Canny and Hough transforms to be more robust in eliminating artifacts, and then expand my region of interest to increase the length of lane visible in the region. To address color issues, such as changing light conditions or faded lane marker. I would first need to expand the Canny thresholds to account for a lower range of acceptable values, but also modify the greyscale image to more clearly separate the lane in shadow from equally dark but non-lane itmes.
 
-All that said, please be concise!  We're not looking for you to write a book here: just a brief description.
+#### License
 
-You're not required to use markdown for your writeup.  If you use another method please just submit a pdf of your writeup. Here is a link to a [writeup template file](https://github.com/udacity/CarND-LaneLines-P1/blob/master/writeup_template.md). 
+The contents of this repository are covered under the MIT License.
 
+Copyright (c) 2017 James Matthew Nee
 
-The Project
----
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-## If you have already installed the [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) you should be good to go!   If not, you should install the starter kit to get started on this project. ##
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-**Step 1:** Set up the [CarND Term1 Starter Kit](https://classroom.udacity.com/nanodegrees/nd013/parts/fbf77062-5703-404e-b60c-95b78b2f3f9e/modules/83ec35ee-1e02-48a5-bdb7-d244bd47c2dc/lessons/8c82408b-a217-4d09-b81d-1bda4c6380ef/concepts/4f1870e0-3849-43e4-b670-12e6f2d4b7a7) if you haven't already.
-
-**Step 2:** Open the code in a Jupyter Notebook
-
-You will complete the project code in a Jupyter notebook.  If you are unfamiliar with Jupyter Notebooks, check out <A HREF="https://www.packtpub.com/books/content/basics-jupyter-notebook-and-python" target="_blank">Cyrille Rossant's Basics of Jupyter Notebook and Python</A> to get started.
-
-Jupyter is an Ipython notebook where you can run blocks of code and see results interactively.  All the code for this project is contained in a Jupyter notebook. To start Jupyter in your browser, use terminal to navigate to your project directory and then run the following command at the terminal prompt (be sure you've activated your Python 3 carnd-term1 environment as described in the [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) installation instructions!):
-
-`> jupyter notebook`
-
-A browser window will appear showing the contents of the current directory.  Click on the file called "P1.ipynb".  Another browser window will appear displaying the notebook.  Follow the instructions in the notebook to complete the project.  
-
-**Step 3:** Complete the project and submit both the Ipython notebook and the project writeup
-
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
-
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
