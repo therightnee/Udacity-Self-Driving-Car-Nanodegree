@@ -37,16 +37,13 @@ The approach can be broken up into two major elements. First determing the lines
             m=((y1-y2)/(x1-x2))
             #Determine if the line is on the left or right side
             if (m < -0.6 and m > -0.9):
-                left_m_sum += m
-                left_tick += 1
-                left_x_sum = left_x_sum + x1 + x2
-                left_y_sum = left_y_sum + y1 + y2
+                left_m_array.append(m)
+                left_x_sum.append(x1, x2)
+                left_y_sum.append(y1,y2)
             elif (m > 0.45 and m < 2):
-                right_m_sum += m
-                right_tick += 1
-                right_x_sum = right_x_sum + x1 + x2
-                right_y_sum = right_y_sum + y1 + y2
-                
+                right_m_array.append(m)
+                right_x_sum.append(x1, x2)
+                right_y_sum.append(y1, y2)
 ```
 
 Here each of the lines in the image is looped through and its slope claculated. If the slope is positive it is a designated as a right side line, and if it is negative a left side line. The number of lines in that set is increment, and the total sum of the x and y values calculated. This sum will be used in the average in the next section.
@@ -54,25 +51,25 @@ Here each of the lines in the image is looped through and its slope claculated. 
 ```
     #Caclulate the start and end-points of the line
     #uses hardcoded y values based on the known size of the image to caluclate x values
-    if left_tick != 0 :
-        left_m = left_m_sum / left_tick
-        left_x_avg = int(left_x_sum / (2*left_tick) )
-        left_y_avg = int(left_y_sum / (2*left_tick) )  
+    if len(left_m_array) != 0 :
+        left_m = np.mean(left_m_array)
+        left_x_avg = int(np.mean(left_x_sum))
+        left_y_avg = int(np.mean(left_y_sum))
         left_y1 = 330
         left_x1 = int( (left_y1 - left_y_avg)/left_m + left_x_avg )
         left_y2 = 960
         left_x2 = int( (left_y2 - left_y_avg)/left_m + left_x_avg )
         cv2.line(img, (left_x1, left_y1), (left_x2, left_y2), color=(255,255,0), thickness=3)
         
-    if right_tick != 0 :
-        right_m = right_m_sum / right_tick
-        right_x_avg = int(right_x_sum / (2*right_tick) )
-        right_y_avg = int(right_y_sum / (2*right_tick) ) 
+    if len(right_m_array) != 0 :
+        right_m = np.mean(right_m_array)
+        right_x_avg = int(np.mean(right_x_sum))
+        right_y_avg = int(np.mean(right_y_sum))
         right_y1 = 330
         right_x1 = int( (right_y1 - right_y_avg)/right_m + right_x_avg )
         right_y2 = 960
         right_x2 = int( (right_y2 - right_y_avg)/right_m + right_x_avg )
-        cv2.line(img, (right_x1, right_y1), (right_x2, right_y2), color=(255,255,255), thickness=3)  
+        cv2.line(img, (right_x1, right_y1), (right_x2, right_y2), color=(255,255,255), thickness=3) 
 ```
 
 Next the two conditional statements return the starting and ending points for the left and right lane lines. Those start and end y-axis coordinates are hardcoded based on the image size, and used to determine the x-axis values.
