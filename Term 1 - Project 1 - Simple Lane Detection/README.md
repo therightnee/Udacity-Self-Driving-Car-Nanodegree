@@ -19,11 +19,11 @@ The goals / steps of this project are the following:
 
 My pipeline is as follows:
 
--Greyscale Conversion
--Gaussian Blur
--Canny Transform
--Region Masking
--Hough Line Transform
+* Greyscale Conversion
+* Gaussian Blur
+* Canny Transform
+* Region Masking
+* Hough Line Transform
 
 Each step was tuned to minimize artifacts and maximize the amount of lane line recognized. The Hough Line transform was the most difficult for me to conceptualize, but certainly offered the most flexibility and precision in lane detection.
 
