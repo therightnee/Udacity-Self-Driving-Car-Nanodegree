@@ -125,9 +125,9 @@ Then I repeated this process on track two in order to get more data points.
 
 Furthermore I took data of the vehicle driving in the opposite direction on the track, as well as keeping the car on the appropriate lane, per US driving standards. I took data in this way from both tracks.
 
-![Centered][image6]
-![Clockwise Track 1][image7]
-![Counterclockwise Track 2][image]
+![Centered][image7]
+![Clockwise Track 1][image8]
+![Counterclockwise Track 2][image9]
 
 
 After the collection process, I had roughly 25,000 sets of center, right, left images, each tied to a steering input.
@@ -153,3 +153,5 @@ I used this training data for training the model. The validation set helped dete
 ![Fifth Training][image6]
 
 I used an adam optimizer so that manually training the learning rate wasn't necessary, but I did tune the parameters so that the learning rate would decay at a more controlled rate. Based on the fluctuations in validation loss I was concerned the learning rate was not decaying fast enough and was skipping over the optimal weights.
+
+Check out the "run2.mp4" to see the simulation complete a full lap autonomously.
