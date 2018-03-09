@@ -38,29 +38,28 @@ Here you go!
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-===MODIFY THIS===
-The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `some_file.py`).  
+In the second cell of the "Vehicle_Detection.ipynb" notebook, I wrote a method that does both HOG feature extraction and pre-processing for colorspace detection.
 
-I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
+Instead of converting the 3-layer image through a single gradient colorspace, I ran HOG feature extraction on each layer, after converting the image into the desired colorspace.
 
-![alt text][image1]
+Here is the input image:
 
-I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
+Here is the normalized HLS converted image:
 
-Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
-
+This is what 'ch1' which is fed into the HOG extraction looks like:
 
 ![alt text][image2]
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
-===FILL THIS OUT===
+***RUN CODE WITH VARIOUS ORIENTATIONS, PIXELS PER CELL, CELLS PER BLOCK ETC***
+
+In the sub-sampling version there was greater value to modifying the cells per block and pixels per cell, but given that I know the input patch would only be 64x64, that gave me a more narrow range of effective values.
 
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-
-Based on the advanced lane finding project I knew I wanted to use the HLS color space, since I saw that it was powerful in detecting lane lines, and would help my classifier detect lane lines, and reject them.
+Based on the advanced lane finding project I knew I wanted to use the HLS color space, since I saw that it was powerful in detecting lane lines, and would help my classifier detect road features and detect them. I was a little concerned how this colorspace might work with the vehicle and non-vehicle training set because the images were not particularly variant in terms of lighting
 
 ### Sliding Window Search
 
@@ -81,7 +80,7 @@ I leaned heavily on the test images to track how changes to my parameters affect
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
 
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](./Bounded_Output.mp4)
 
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
