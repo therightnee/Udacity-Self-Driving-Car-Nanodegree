@@ -90,9 +90,8 @@ Final HOG Parameters:
 
 Based on the advanced lane finding project I knew I wanted to use the HLS color space, since I saw that it was powerful in detecting lane lines, and would help my classifier detect road features and detect them. This was further verified through my parameter tuning when I cycled through the available color spaces and evaluated which colorspace would generate the most features. I was a little concerned how this colorspace might work with the vehicle and non-vehicle training set because the images were not particularly variant in terms of lighting, but HSV did seem to be the best choice.
 
-I then loaded the non-vehicle and vehicle images from the GTI and KITTI sets, run all the images through the patch analyzer, which normalizes the images as part of the function. Then the outputs and their labels, are split into training and test sets, and then scaled independently to prevent information crossover.
-
-After the transform, the Linear SVC is trained with a rather low C value, allowing for more error in the system. This becomes apparent in the output video that the C value may have been too low. I did not modify the default Gamma value.
+Cells 3-5 of 'VehicleDetection.ipynb', I load the non-vehicle and vehicle images from the GTI and KITTI sets, run all the images through the patch analyzer, which normalizes the images as part of the function, then the outputs and their labels, are split into training and test sets, and scale the two sets independently to prevent information crossover.
+After the transform, a linear SVC is trained. I chose to set a low C value, allowing for more error in the system. This becomes apparent in the output video that the C value may have been too low. I did not modify the default Gamma value.
 
 Final Color Space (HSV):
 
