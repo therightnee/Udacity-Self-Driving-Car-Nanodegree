@@ -137,8 +137,7 @@ This is where I realized that visualizing the HOG images was severely impeding m
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
 
-Here's a [https://www.dropbox.com/s/ysf3dwf3xc58oyc/Bounded_Output.mp4?dl=0](./Bounded_Output.mp4)
-
+Here's a link to Dropbox, where you can view the file.](https://www.dropbox.com/s/ysf3dwf3xc58oyc/Bounded_Output.mp4?dl=0)
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
