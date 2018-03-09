@@ -115,7 +115,7 @@ Dense 4: 1 output
 
 Note that in the referenced paper, there is a 1124 node output as the first fully connected layer. In earlier versions of the model including this layer increased training time and final model size. The layer was removed to reduce the total number of nodes in the system.
 
-![Model Visualization][image1]
+![alt text][image1]
 
 #### 3. Creation of the Training Set & Training Process
 
@@ -125,9 +125,9 @@ Then I repeated this process on track two in order to get more data points.
 
 Furthermore I took data of the vehicle driving in the opposite direction on the track, as well as keeping the car on the appropriate lane, per US driving standards. I took data in this way from both tracks.
 
-![Centered][image7]
-![Clockwise Track 1][image8]
-![Counterclockwise Track 2][image9]
+![alt text][image7]
+![alt text][image8]
+![alt text][image9]
 
 
 After the collection process, I had roughly 25,000 sets of center, right, left images, each tied to a steering input.
@@ -146,11 +146,11 @@ For each data set, I randomly shuffled the data set and put Y% of the data into 
 
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting, and the 3 epoch setting was driven by studying when these values stabilized. Looking at the graphs of validation loss compared to training loss, it appears that the validation loss does not drop or even decrease with epochs. Given the way I structured my training, however, it is important to note that the starting values do get progressively lower, starting around 0.13 and ending around 0.0170.
 
-![First Training][image2]
-![Second Training][image3]
-![Third Training][image4]
-![Fourth Training][image5]
-![Fifth Training][image6]
+![alt text][image2]
+![alt text][image3]
+![alt text][image4]
+![alt text][image5]
+![alt text][image6]
 
 I used an adam optimizer so that manually training the learning rate wasn't necessary, but I did tune the parameters so that the learning rate would decay at a more controlled rate. Based on the fluctuations in validation loss I was concerned the learning rate was not decaying fast enough and was skipping over the optimal weights.
 
