@@ -15,14 +15,38 @@ The goals / steps of this project are the following:
 * Estimate a bounding box for vehicles detected.
 
 [//]: # (Image References)
-[image1]: ./examples/car_not_car.png
-[image2]: ./examples/HOG_example.jpg
-[image3]: ./examples/sliding_windows.jpg
-[image4]: ./examples/sliding_window.jpg
-[image5]: ./examples/bboxes_and_heat.png
-[image6]: ./examples/labels_map.png
-[image7]: ./examples/output_bboxes.png
-[video1]: ./project_video.mp4
+
+[image1]: ./WriteUp_Images/HOG_Feature_Mods/8O_8x8_1x1CELL_HOGwHSV.png
+
+[image2]: ./WriteUp_Images/HOG_Feature_Mods/8O_8x8_1x1CELL_HOGwLAB.png
+[image3]: ./WriteUp_Images/HOG_Feature_Mods/8O_8x8_1x1CELL_HOGwYCrCb.png
+
+[image4]: ./WriteUp_Images/HOG_Feature_Mods/12O_4x4_2x2CELL_HOGwHSV.png
+[image5]: ./WriteUp_Images/HOG_Feature_Mods/12O_4x4_HOGwHSV.png
+
+[image6]: ./WriteUp_Images/Sliding_Window.png
+
+[image7]: ./WriteUp_Images/TestImage/Test_Image_Bounded.jpg
+[image8]: ./WriteUp_Images/TestImage/Test_Image_Heatmap.jpg
+
+[image9]: ./WriteUp_Images/TestFrame/Test_Frame_Bounded.png
+[image10]: ./WriteUp_Images/TestFrame/Test_Frame_Heatmap.png
+[image11]: ./WriteUp_Images/TestFrame/Test_Frame_Original.png
+
+[image12]: ./WriteUp_Images/Bounded_Image&HeatMaps/225.png
+[image13]: ./WriteUp_Images/Bounded_Image&HeatMaps/225-heat.png
+[image14]: ./WriteUp_Images/Bounded_Image&HeatMaps/255.png
+[image15]: ./WriteUp_Images/Bounded_Image&HeatMaps/255-heat.png
+[image16]: ./WriteUp_Images/Bounded_Image&HeatMaps/287.png
+[image17]: ./WriteUp_Images/Bounded_Image&HeatMaps/287-heat.png
+[image18]: ./WriteUp_Images/Bounded_Image&HeatMaps/412.png
+[image19]: ./WriteUp_Images/Bounded_Image&HeatMaps/412-heat.png
+[image20]: ./WriteUp_Images/Bounded_Image&HeatMaps/450.png
+[image21]: ./WriteUp_Images/Bounded_Image&HeatMaps/450-heat.png
+[image22]: ./WriteUp_Images/Bounded_Image&HeatMaps/503.png
+[image23]: ./WriteUp_Images/Bounded_Image&HeatMaps/503-heat.png
+
+[video1]: ./Bounded_Output.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -38,49 +62,79 @@ Here you go!
 
 #### 1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-In the second cell of the "Vehicle_Detection.ipynb" notebook, I wrote a method that does both HOG feature extraction and pre-processing for colorspace detection.
+In the second cell of the "Vehicle_Detection.ipynb" notebook, I wrote a method titled 'patch_analyzer' that does both HOG feature extraction and pre-processing for colorspace detection.
 
-Instead of converting the 3-layer image through a single gradient colorspace, I ran HOG feature extraction on each layer, after converting the image into the desired colorspace.
-
-Here is the input image:
-
-Here is the normalized HLS converted image:
-
-This is what 'ch1' which is fed into the HOG extraction looks like:
-
-![alt text][image2]
+Instead of converting the 3-channel RGB image through a single gradient colorspace, I ran HOG feature extraction on each channel, after converting the image into the desired colorspace.
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
-***RUN CODE WITH VARIOUS ORIENTATIONS, PIXELS PER CELL, CELLS PER BLOCK ETC***
+To my detriment, I actually did not tune the HOG parameters before running the classifier. I took what had been presented in the lessons and implemented that right away.
 
-In the sub-sampling version there was greater value to modifying the cells per block and pixels per cell, but given that I know the input patch would only be 64x64, that gave me a more narrow range of effective values.
+After I had already created the output video, I decided to experiment with different HOG parameters, and believe that I should have increased the orientation count, and decreased the pixel area per cell. The cells per block didn't seem to have much effect, even with the decreased pixel area, but had I been tracking computation time the increased block size likely would have made processing faster.
 
+Additionally, I was a little disappointed to see how ineffective CH2 and CH3 were across all colorspaces. The output video took nearly seven hours to compute at 10 FPS, and if most of the classification was from a single channel then I could have cut the compute time in half. Lessons learned.
+
+Final HOG Parameters:
+
+![alt text][image1]
+
+12 Orientation, 4x4 Pixel Area, 1 Cell Per Block:
+
+![alt text][image4]
+
+12 Orientation, 4x4 Pixel Area, 2 Cells Per Block:
+
+![alt text][image5]
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-Based on the advanced lane finding project I knew I wanted to use the HLS color space, since I saw that it was powerful in detecting lane lines, and would help my classifier detect road features and detect them. I was a little concerned how this colorspace might work with the vehicle and non-vehicle training set because the images were not particularly variant in terms of lighting
+Based on the advanced lane finding project I knew I wanted to use the HLS color space, since I saw that it was powerful in detecting lane lines, and would help my classifier detect road features and detect them. This was further verified through my parameter tuning when I cycled through the available color spaces and evaluated which colorspace would generate the most features. I was a little concerned how this colorspace might work with the vehicle and non-vehicle training set because the images were not particularly variant in terms of lighting
+
+Final Color Space (HSV):
+
+![alt text][image1]
+
+LAB Color Space:
+
+![alt text][image2]
+
+YCrCb Color Space:
+
+![alt text][image3]
 
 ### Sliding Window Search
 
 #### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
-I created a list of various scales and scaled the images to search over various window sizes. A render of what that the various scales looked like are below.
+In the seventh cell of the "Vehicle_Detection.ipynb" notebook, I wrote titled 'sliding_window' that takes the input image, a start and stop input, and a scalar value. The scalar will scale the image accordingly, doubling or halving as commanded. This in effect creates a sliding window search. The patches are still the same size, but the effect is that they are searching over an different area, because the image itself has changed. The start and stop inputs allows the search to be more efficient; if I already know that a certain region will be mostly sky or irrelevant lanes, then I do not need the calsifier to search in that region.
 
-![alt text][image3]
+![alt text][image6]
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
 I leaned heavily on the test images to track how changes to my parameters affected my detection rates.
 
-![alt text][image4]
+![alt text][image7]
+
+![alt text][image8]
+
+Then I pulled a single frame from the short, one second video to develop a time reference for how long it would take to go through the project video.
+
+This is where I realized that visualizing the HOG images was severely impeding my iteration rate, and set them all to 'False'.
+
+![alt text][image9]
+
+![alt text][image10]
+
+![alt text][image11]
+
 ---
 
 ### Video Implementation
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
 
-Here's a [link to my video result](./Bounded_Output.mp4)
+Here's a [https://www.dropbox.com/s/ysf3dwf3xc58oyc/Bounded_Output.mp4?dl=0](./Bounded_Output.mp4)
 
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
@@ -90,16 +144,46 @@ Heatmaps were implemented, and the threshold value tuned to eliminate some false
 Also, in addition to heatmaps, I implemented a physically based check that looked at the height and width of the box being drawn and rejected it if it was too small. This is relatively crude, but was able to eliminate a good deal of mis-classified noise that was had a high enough heatmap value to qualify as an object, but was too small to possibly be a vehicle.
 
 ### Here are six frames and their corresponding heatmaps:
+Note: I multiplied all the values in the image by 5 so that the highlighted regions would be more apparent. Without this gain, the heated areas were of low intensity and difficult to see.
 
-![alt text][image5]
+Frane 225
 
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![alt text][image6]
+![alt text][image12]
+
+![alt text][image13]
+
+Frame 255
+
+![alt text][image14]
+
+![alt text][image15]
+
+Frame 287
+
+![alt text][image16]
+
+![alt text][image17]
+
+Frame 412
+
+![alt text][image18]
+
+![alt text][image19]
+
+Frame 450
+
+![alt text][image20]
+
+![alt text][image21]
+
 
 ### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
 
+I particularly like this frame because even though the black Mercedes is not fully in the frame, the classifier is still able to discern that it is a car and bound it.
 
+![alt text][image22]
+
+![alt text][image23]
 
 ---
 
@@ -109,4 +193,6 @@ Also, in addition to heatmaps, I implemented a physically based check that looke
 
 I attempted to implement sub-sampling both to improve detection rates and also increase the scale range that I could cycle through.  My current method calculates the HOG for every patch fed into the classifier, which is computationally intensive. If I could just calculate the HOG features once and extract that information it would be much more efficient, and possibly more capable.
 
-Another issue that is apparent in the output video is that I chose poorly regarding the colorspace. The classifier easily detects dark colored vehicles, but largely ignores the white one. It is able to pick up some features like the headlights, tires, and rear window, but is unable to piece these elements together into one holistic object.
+Another issue that is apparent in the output video is that I chose poorly regarding the colorspace implementation, either in training or the channel separation. The classifier easily detects dark colored vehicles, but largely ignores the white one. It is able to pick up some features like the headlights, tires, and rear window, but is unable to piece these elements together into one holistic object.
+
+Finally, one of the most persistent, and frustrating, issues was poor classification. I believe I needed to trian my classifier on a greater set of images than just the GTI and KTTT set, because it was recognizing road elements as vehicles.
