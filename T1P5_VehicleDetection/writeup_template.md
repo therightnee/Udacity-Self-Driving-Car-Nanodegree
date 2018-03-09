@@ -26,8 +26,8 @@ The goals / steps of this project are the following:
 
 [image6]: ./WriteUp_Images/Sliding_Window.png
 
-[image7]: ./WriteUp_Images/TestImage/Test_Image_Bounded.jpg
-[image8]: ./WriteUp_Images/TestImage/Test_Image_Heatmap.jpg
+[image7]: ./WriteUp_Images/TestImage/Test_Image_Bounded.png
+[image8]: ./WriteUp_Images/TestImage/Test_Image_Heatmap.png
 
 [image9]: ./WriteUp_Images/TestFrame/Test_Frame_Bounded.png
 [image10]: ./WriteUp_Images/TestFrame/Test_Frame_Heatmap.png
@@ -88,7 +88,11 @@ Final HOG Parameters:
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-Based on the advanced lane finding project I knew I wanted to use the HLS color space, since I saw that it was powerful in detecting lane lines, and would help my classifier detect road features and detect them. This was further verified through my parameter tuning when I cycled through the available color spaces and evaluated which colorspace would generate the most features. I was a little concerned how this colorspace might work with the vehicle and non-vehicle training set because the images were not particularly variant in terms of lighting
+Based on the advanced lane finding project I knew I wanted to use the HLS color space, since I saw that it was powerful in detecting lane lines, and would help my classifier detect road features and detect them. This was further verified through my parameter tuning when I cycled through the available color spaces and evaluated which colorspace would generate the most features. I was a little concerned how this colorspace might work with the vehicle and non-vehicle training set because the images were not particularly variant in terms of lighting, but HSV did seem to be the best choice.
+
+I then loaded the non-vehicle and vehicle images from the GTI and KITTI sets, run all the images through the patch analyzer, which normalizes the images as part of the function. Then the outputs and their labels, are split into training and test sets, and then scaled independently to prevent information crossover.
+
+After the transform, the Linear SVC is trained with a rather low C value, allowing for more error in the system. This becomes apparent in the output video that the C value may have been too low. I did not modify the default Gamma value.
 
 Final Color Space (HSV):
 
@@ -195,4 +199,4 @@ I attempted to implement sub-sampling both to improve detection rates and also i
 
 Another issue that is apparent in the output video is that I chose poorly regarding the colorspace implementation, either in training or the channel separation. The classifier easily detects dark colored vehicles, but largely ignores the white one. It is able to pick up some features like the headlights, tires, and rear window, but is unable to piece these elements together into one holistic object.
 
-Finally, one of the most persistent, and frustrating, issues was poor classification. I believe I needed to trian my classifier on a greater set of images than just the GTI and KTTT set, because it was recognizing road elements as vehicles.
+Finally, one of the most persistent, and frustrating, issues was poor classification. I believe I needed to trian my classifier on a greater set of images than just the GTI and KITTI sets, because it was recognizing road elements as vehicles.
