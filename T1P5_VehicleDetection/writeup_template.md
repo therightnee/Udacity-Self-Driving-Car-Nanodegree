@@ -45,6 +45,8 @@ The goals / steps of this project are the following:
 [image21]: ./WriteUp_Images/Bounded_Image&HeatMaps/450-heat.png
 [image22]: ./WriteUp_Images/Bounded_Image&HeatMaps/503.png
 [image23]: ./WriteUp_Images/Bounded_Image&HeatMaps/503-heat.png
+[image24]: ./WriteUp_Images/450_2.png.png
+[image25]: ./WriteUp_Images/450-heat2.png
 
 [video1]: ./Bounded_Output.mp4
 
@@ -65,6 +67,12 @@ Here you go!
 In the second cell of the "Vehicle_Detection.ipynb" notebook, I wrote a method titled 'patch_analyzer' that does both HOG feature extraction and pre-processing for colorspace detection.
 
 Instead of converting the 3-channel RGB image through a single gradient colorspace, I ran HOG feature extraction on each channel, after converting the image into the desired colorspace.
+
+===UPDATE===
+
+Per the feedback on the last submission, I increased the orientations to 11, pixesl to 16x16, and 2x2 cells per block. The HOG features were calculated on top of a YUV image, and the color space extraction done an an HLS image.
+
+When I compared the HOG images to my previous tunings, it actually seemed that the suggested parameters would be worse, but after continuing to the SVM training I found that I was able to get higher validation percentages with even stricter C values, so I continued onward to the object recognition.
 
 #### 2. Explain how you settled on your final choice of HOG parameters.
 
@@ -111,6 +119,11 @@ YCrCb Color Space:
 
 In the seventh cell of the "Vehicle_Detection.ipynb" notebook, I wrote titled 'sliding_window' that takes the input image, a start and stop input, and a scalar value. The scalar will scale the image accordingly, doubling or halving as commanded. This in effect creates a sliding window search. The patches are still the same size, but the effect is that they are searching over an different area, because the image itself has changed. The start and stop inputs allows the search to be more efficient; if I already know that a certain region will be mostly sky or irrelevant lanes, then I do not need the calsifier to search in that region.
 
+
+===UPDATE===
+
+The scale for the windows were also changed based on feedback from the previous submission. I chose to use 0.5, 0.75, 1, and 2. The feedback mentioned using 2-3 instead of 4, but I found that having the half-sized window search was useful, and maintained it. To speed up my processing time I launched a compute optimized AWS instance, and when coupled with the other speed improvements to my pipeline, I was able to process the video in half the time.
+
 ![alt text][image6]
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
@@ -137,7 +150,11 @@ This is where I realized that visualizing the HOG images was severely impeding m
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
 
-Here's a link to Dropbox, where you can view the file: https://www.dropbox.com/s/ysf3dwf3xc58oyc/Bounded_Output.mp4?dl=0
+Here's a link to Dropbox, where you can view the file: https://www.dropbox.com/s/ysf3dwf3xc58oyc/Bounded_Output.mp4?dl=
+
+===UPDATE===
+
+New link - https://www.dropbox.com/s/m6apwgbcwphgpi7/VehicleDetection_Take2.mp4?dl=0
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
@@ -150,42 +167,49 @@ Note: I multiplied all the values in the image by 5 so that the highlighted regi
 
 Frane 225
 
-![alt text][image12]
+![alt text][image12 | width=75]
 
-![alt text][image13]
+![alt text][image13 | width=75]
 
 Frame 255
 
-![alt text][image14]
+![alt text][image14 | width=75]
 
-![alt text][image15]
+![alt text][image15 | width=75]
 
 Frame 287
 
-![alt text][image16]
+![alt text][image16 | width=75]
 
-![alt text][image17]
+![alt text][image17 | width=75]
 
 Frame 412
 
-![alt text][image18]
+![alt text][image18 | width=75]
 
-![alt text][image19]
+![alt text][image19 | width=75]
 
 Frame 450
 
-![alt text][image20]
+![alt text][image20 | width=75]
 
-![alt text][image21]
+![alt text][image21 | width=75]
 
+===UPDATE==
+
+The following is Frame 450 of the second video. I was able to get the cmap functionality working and also the noise reduction is rather good.
+
+![alt text][image20 | width=75]
+
+![alt text][image21 | width=75]
 
 ### Here the resulting bounding boxes are drawn onto the last frame in the series:
 
 I particularly like this frame because even though the black Mercedes is not fully in the frame, the classifier is still able to discern that it is a car and bound it.
 
-![alt text][image22]
+![alt text][image22 | width=75]
 
-![alt text][image23]
+![alt text][image23 | width=75]
 
 ---
 
@@ -198,3 +222,7 @@ I attempted to implement sub-sampling both to improve detection rates and also i
 Another issue that is apparent in the output video is that I chose poorly regarding the colorspace implementation, either in training or the channel separation. The classifier easily detects dark colored vehicles, but largely ignores the white one. It is able to pick up some features like the headlights, tires, and rear window, but is unable to piece these elements together into one holistic object.
 
 Finally, one of the most persistent, and frustrating, issues was poor classification. I believe I needed to trian my classifier on a greater set of images than just the GTI and KITTI sets, because it was recognizing road elements as vehicles.
+
+===UPDATE===
+
+After the modifications were made to the HOG parameters, the new pipeline performs much better, recognizing more vehicles and rejecting more false-positives. I noticed that the object detection is weak around shadows, and has the most fals positives when driving through an overcast section of the freeway. Additionally, the classifier recognizes part of the hood as another "car", as well as some billboards. Going forward, I can further reduce the search window to preclude the entirety of the hood, and add more billboards to the SVM training data. Regarding shadows, that will likely be a combination of tuning my colorspace parameters and training.
