@@ -167,49 +167,49 @@ Note: I multiplied all the values in the image by 5 so that the highlighted regi
 
 Frane 225
 
-![alt text][image12 | width=75]
+![alt text][image12]
 
-![alt text][image13 | width=75]
+![alt text][image13]
 
 Frame 255
 
-![alt text][image14 | width=75]
+![alt text][image14]
 
-![alt text][image15 | width=75]
+![alt text][image15]
 
 Frame 287
 
-![alt text][image16 | width=75]
+![alt text][image16]
 
-![alt text][image17 | width=75]
+![alt text][image17]
 
 Frame 412
 
-![alt text][image18 | width=75]
+![alt text][image18]
 
-![alt text][image19 | width=75]
+![alt text][image19]
 
 Frame 450
 
-![alt text][image20 | width=75]
+![alt text][image20]
 
-![alt text][image21 | width=75]
+![alt text][image21]
 
 ===UPDATE==
 
 The following is Frame 450 of the second video. I was able to get the cmap functionality working and also the noise reduction is rather good.
 
-![alt text][image20 | width=75]
+![alt text][image24]
 
-![alt text][image21 | width=75]
+![alt text][image25]
 
 ### Here the resulting bounding boxes are drawn onto the last frame in the series:
 
 I particularly like this frame because even though the black Mercedes is not fully in the frame, the classifier is still able to discern that it is a car and bound it.
 
-![alt text][image22 | width=75]
+![alt text][image22]
 
-![alt text][image23 | width=75]
+![alt text][image23]
 
 ---
 
