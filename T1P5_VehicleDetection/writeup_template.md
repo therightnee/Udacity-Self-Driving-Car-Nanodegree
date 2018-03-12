@@ -45,7 +45,7 @@ The goals / steps of this project are the following:
 [image21]: ./WriteUp_Images/Bounded_Image&HeatMaps/450-heat.png
 [image22]: ./WriteUp_Images/Bounded_Image&HeatMaps/503.png
 [image23]: ./WriteUp_Images/Bounded_Image&HeatMaps/503-heat.png
-[image24]: ./WriteUp_Images/450_2.png.png
+[image24]: ./WriteUp_Images/450_2.png
 [image25]: ./WriteUp_Images/450-heat2.png
 
 [video1]: ./Bounded_Output.mp4
