@@ -127,6 +127,8 @@ The scale for the windows were also changed based on feedback from the previous 
 ![alt text][image6]
 
 ===UPDATE 2===
+
+
 I added an additional axis of control to the sliding window search so I could focus searching only on lanes that had traffic flows in the same direction.
 
 #### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
@@ -164,6 +166,8 @@ Heatmaps were implemented, and the threshold value tuned to eliminate some false
 Also, in addition to heatmaps, I implemented a physically based check that looked at the height and width of the box being drawn and rejected it if it was too small. This is relatively crude, but was able to eliminate a good deal of mis-classified noise that was had a high enough heatmap value to qualify as an object, but was too small to possibly be a vehicle.
 
 ===UPDATE===
+
+
 Based on the feedback of the last submission, I spent a lot of time tuning and adding features to the pipeline to improve perforamnce. I used the `collections.deque` to create a trailing average to influence the heatmap in hopes of reducing splitting of the boxes, and the LinearSVC `decision_function` method to only return patches that had a high confidence of being a car.
 
 Despite this, I was unable to eliminate all false positives, the highway exit sign being the most difficult, without losing track of the white car, so I preferenced tracking the white car all the way through the clip and accepting a few frames of tracking the highway sign.
