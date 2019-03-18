@@ -1,5 +1,4 @@
 # Extended Kalman Filter Project Write Up
-Self-Driving Car Engineer Nanodegree Program
 
 This project implemeented an Extended Kalman Filter to estimate the state of a moving object of interest with noisy lidar and radar measurements. The "extended" aspect of the Kalman filter was that it used a Jacobian to linearize the input from the RADAR sensor.
 
