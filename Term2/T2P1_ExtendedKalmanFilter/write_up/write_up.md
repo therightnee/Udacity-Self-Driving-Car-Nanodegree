@@ -5,7 +5,6 @@ This project implemeented an Extended Kalman Filter to estimate the state of a m
 
 The filter was able to achieve an px, py, vx, vy RMSE of [0.0965, 0.0853, 0.4312, 0.4280] which is lower than the values required in the project rubric. 
 
-Inline-style: 
 ![alt text](EKF_out.png "Sample Output from Dataset 1 Run with EKF Implementation")
 
 ### General Extended Kalman Filter Methodology
