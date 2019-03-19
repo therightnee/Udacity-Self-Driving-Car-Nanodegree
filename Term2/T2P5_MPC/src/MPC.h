@@ -5,6 +5,7 @@
 #include "Eigen-3.3/Eigen/Core"
 
 using namespace std;
+using Eigen::VectorXd;
 
 class MPC {
  public:
@@ -14,7 +15,10 @@ class MPC {
 
   // Solve the model given an initial state and polynomial coefficients.
   // Return the first actuatotions.
-  vector<double> Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs);
+  std::vector<double> Solve( VectorXd &state, VectorXd &coeffs);
+
+  const Eigen::VectorXd Latency( double v, double steering_input, 
+                    double throttle_input, double cte, double psi_error);
 };
 
 #endif /* MPC_H */

@@ -779,11 +779,23 @@ cppad/cppad.hpp
 -
 cppad/ipopt/solve.hpp
 -
+iostream
+-
+string
+-
+vector
+-
 Eigen-3.3/Eigen/Core
 /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P5_MPC/src/Eigen-3.3/Eigen/Core
 
 /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P5_MPC/src/MPC.h
 vector
+-
+Eigen-3.3/Eigen/Core
+/home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P5_MPC/src/Eigen-3.3/Eigen/Core
+
+/home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P5_MPC/src/helpers.h
+string
 -
 Eigen-3.3/Eigen/Core
 /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P5_MPC/src/Eigen-3.3/Eigen/Core
@@ -853,6 +865,8 @@ chrono
 -
 iostream
 -
+string
+-
 thread
 -
 vector
@@ -861,8 +875,10 @@ Eigen-3.3/Eigen/Core
 /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P5_MPC/src/Eigen-3.3/Eigen/Core
 Eigen-3.3/Eigen/QR
 /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P5_MPC/src/Eigen-3.3/Eigen/QR
-MPC.h
-/home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P5_MPC/src/MPC.h
+helpers.h
+/home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P5_MPC/src/helpers.h
 json.hpp
 /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P5_MPC/src/json.hpp
+MPC.h
+/home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P5_MPC/src/MPC.h
 

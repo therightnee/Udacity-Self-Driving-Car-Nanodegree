@@ -302,6 +302,7 @@ CMakeFiles/mpc.dir/src/main.cpp.o: ../src/Eigen-3.3/Eigen/src/plugins/CommonCwis
 CMakeFiles/mpc.dir/src/main.cpp.o: ../src/Eigen-3.3/Eigen/src/plugins/MatrixCwiseBinaryOps.h
 CMakeFiles/mpc.dir/src/main.cpp.o: ../src/Eigen-3.3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
 CMakeFiles/mpc.dir/src/main.cpp.o: ../src/MPC.h
+CMakeFiles/mpc.dir/src/main.cpp.o: ../src/helpers.h
 CMakeFiles/mpc.dir/src/main.cpp.o: ../src/json.hpp
 CMakeFiles/mpc.dir/src/main.cpp.o: ../src/main.cpp
 

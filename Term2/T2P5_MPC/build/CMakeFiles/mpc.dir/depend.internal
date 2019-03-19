@@ -303,5 +303,6 @@ CMakeFiles/mpc.dir/src/main.cpp.o
  /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P5_MPC/src/Eigen-3.3/Eigen/src/plugins/MatrixCwiseBinaryOps.h
  /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P5_MPC/src/Eigen-3.3/Eigen/src/plugins/MatrixCwiseUnaryOps.h
  /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P5_MPC/src/MPC.h
+ /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P5_MPC/src/helpers.h
  /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P5_MPC/src/json.hpp
  /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P5_MPC/src/main.cpp
