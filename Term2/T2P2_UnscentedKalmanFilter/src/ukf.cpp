@@ -507,7 +507,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
   //calculate NIS
   NIS_radar_ = z_diff.transpose() * S.inverse() * z_diff;
  
-  if (NIS_laser_ > 7.815) {
+  if (NIS_radar_ > 7.815) {
     radar_cons += 1;
   	std::cout << "RADAR Consistency Count: " << radar_cons << 
       " NIS RADAR: " << NIS_radar_ << std::endl;
