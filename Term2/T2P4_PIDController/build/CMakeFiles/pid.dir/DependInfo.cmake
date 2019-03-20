@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/CarND-PID-Control-Project/src/PID.cpp" "/home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/CarND-PID-Control-Project/build/CMakeFiles/pid.dir/src/PID.cpp.o"
-  "/home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/CarND-PID-Control-Project/src/main.cpp" "/home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/CarND-PID-Control-Project/build/CMakeFiles/pid.dir/src/main.cpp.o"
+  "/home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P4_PIDController/src/PID.cpp" "/home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P4_PIDController/build/CMakeFiles/pid.dir/src/PID.cpp.o"
+  "/home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P4_PIDController/src/main.cpp" "/home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P4_PIDController/build/CMakeFiles/pid.dir/src/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

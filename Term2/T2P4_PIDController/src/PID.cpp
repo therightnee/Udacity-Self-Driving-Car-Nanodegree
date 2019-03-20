@@ -62,12 +62,14 @@ bool PID::TwiddleTuner(double cte, double steer_value, int step_count, int cur_g
         std::cout << "Second conditional" << std::endl;
         mSecond_case = false;
         if (mCurr_err < mBest_err){
+            std::cout << "Second conditional - First option" << std::endl;
             mBest_err = mCurr_err;
             mKp = p[0];
             mKi = p[1];
             mKd = p[2];
             dp[mGain_Pos] *= 1.1;
         } else {
+            std::cout << "Second conditional - Second option" << std::endl;
             p[mGain_Pos] += dp[mGain_Pos];
             dp[mGain_Pos] *= 0.9;
         }

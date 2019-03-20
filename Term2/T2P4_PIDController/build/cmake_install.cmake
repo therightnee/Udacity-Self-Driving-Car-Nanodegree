@@ -1,4 +1,4 @@
-# Install script for directory: /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/CarND-PID-Control-Project
+# Install script for directory: /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P4_PIDController
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/CarND-PID-Control-Project/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P4_PIDController/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

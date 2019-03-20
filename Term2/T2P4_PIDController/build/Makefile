@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/CarND-PID-Control-Project
+CMAKE_SOURCE_DIR = /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P4_PIDController
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/CarND-PID-Control-Project/build
+CMAKE_BINARY_DIR = /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P4_PIDController/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/CarND-PID-Control-Project/build/CMakeFiles /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/CarND-PID-Control-Project/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P4_PIDController/build/CMakeFiles /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P4_PIDController/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/CarND-PID-Control-Project/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/jnee/Documents/Udacity-Self-Driving-Car-Nanodegree/Term2/T2P4_PIDController/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

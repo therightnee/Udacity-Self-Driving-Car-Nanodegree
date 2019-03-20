@@ -38,14 +38,14 @@ int main() {
 // Initialize the fine tuned values or coarse values to be tuned
   bool tune = false;
   int step_count = 0;
-  int step_threshold = 500;
+  int step_threshold = 1500;
   int loop_counter = 0;
   bool tol_check = false;
   
   if (tune == true) {
-    pid.Init(0.05, 0.0001, 1.5);
+    pid.Init(0.07, 0.0003, 1.7);
   } else {
-    pid.Init(0.07, 0.0002, 1.6);
+    pid.Init(0.08,0.0006,2);
   }
 
   h.onMessage([&pid, &tune, &step_count, &step_threshold, &loop_counter, &tol_check](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, 
