@@ -4,7 +4,7 @@ This project implemented a PID controller to control the steering input to drive
 
 Final PID parameters were:
 
-Performance of the final PID parameters:
+Performance of the final PID parameters: {0.08,0.0006,2}
 
 ![alt text](Localization_Success.png "No hands.")
 

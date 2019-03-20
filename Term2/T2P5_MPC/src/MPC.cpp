@@ -12,7 +12,7 @@ using Eigen::VectorXd;
 /**
  * TODO: Set the timestep length and duration
  */
-size_t N = 12;
+size_t N = 20;
 double dt = 0.05;
 
 // This value assumes the model presented in the classroom is used.
@@ -30,8 +30,6 @@ const double Lf = 2.67;
 
 // Both the reference cross track and orientation errors are 0.
 // The reference velocity is set to 40 mph.
-double ref_cte = 0;
-double ref_epsi = 0;
 double ref_v = 40;
 
 // The solver takes all the state variables and actuator
@@ -48,52 +46,35 @@ size_t a_start = delta_start + N - 1;
 
 
 class FG_eval {
-public:
-    // Fitted polynomial coefficients
-    Eigen::VectorXd coeffs;
-    
-    FG_eval(Eigen::VectorXd coeffs) {
-        this->coeffs = coeffs;
-    }
-    
-    typedef CPPAD_TESTVECTOR(AD<double>) ADvector;
-    
-    ///////////////////////////////////////////////////
-    // MPC
-    // `fg` a vector of the cost constraints,
-    // `vars` is a vector of variable values (state & actuators)
-    ///////////////////////////////////////////////////
-    void operator()(ADvector& fg, const ADvector& vars) {
+ public:
+  // Fitted polynomial coefficients
+  VectorXd coeffs;
+  FG_eval(VectorXd coeffs) { this->coeffs = coeffs; }
+
+  typedef CPPAD_TESTVECTOR(AD<double>) ADvector;
+  void operator()(ADvector& fg, const ADvector& vars) {
     
         // The cost is stored is the first element of `fg`.
         // Any additions to the cost should be added to `fg[0]`.
         fg[0] = 0;
         
-        // weights used to refine cost value
-        const double cte_weight = 1;
-        const double epsi_weight = 1;
-        const double v_weight = 10;
-        const double actuator_cost_weight = 5;
-        const double steer_rate_cost_weight = 200;
-        const double accel__rate_cost_weight = 10;
-        
         // The part of the cost based on the reference state.
         for (int t = 0; t < N; t++) {
-            fg[0] += cte_weight * CppAD::pow(vars[cte_start + t] - ref_cte , 2);
-            fg[0] += epsi_weight * CppAD::pow(vars[epsi_start + t] - ref_epsi, 2);
-            fg[0] += v_weight * CppAD::pow(vars[v_start + t] - ref_v, 2);
+            fg[0] += CppAD::pow(vars[cte_start + t], 2);
+            fg[0] += CppAD::pow(vars[epsi_start + t], 2);
+            fg[0] += 10 * CppAD::pow(vars[v_start + t] - ref_v, 2);
         }
         
         // Minimize change-rate.
         for (int t = 0; t < N - 1; t++) {
-            fg[0] += actuator_cost_weight * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
-            fg[0] += actuator_cost_weight * CppAD::pow(vars[a_start + t], 2);
+            fg[0] += 5 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
+            fg[0] += 5 * CppAD::pow(vars[a_start + t], 2);
         }
         
         // Minimize the value gap between sequential actuations.
         for (int t = 0; t < N - 2; t++) {
-            fg[0] += steer_rate_cost_weight * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
-            fg[0] += accel__rate_cost_weight * CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
+            fg[0] += 200 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
+            fg[0] += 10 * CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
         }
         
     //
