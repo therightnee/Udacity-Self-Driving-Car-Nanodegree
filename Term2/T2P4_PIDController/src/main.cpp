@@ -46,6 +46,8 @@ int main() {
     pid.Init(0.07, 0.0003, 1.7);
   } else {
     pid.Init(0.08,0.0006,2);
+    // Used for Generating test clips
+    //pid.Init(0,0,1);
   }
 
   h.onMessage([&pid, &tune, &step_count, &step_threshold, &loop_counter, &tol_check](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, 
