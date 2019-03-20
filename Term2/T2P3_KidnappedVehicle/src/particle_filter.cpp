@@ -147,7 +147,10 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 			}
 		}
 
-		//Create and populate a copy of the list of observations transformed from vehicle coordinates to map coordinates
+		/*
+        Create and populate a copy of the list of observations transformed from 
+        vehicle coordinates to map coordinates
+        */
 		vector<LandmarkObs> remap;
 		for(unsigned int j = 0; j < observations.size(); j++) {
 			double t_x = cos(p_theta)*observations[j].x - sin(p_theta)*observations[j].y + p_x;
@@ -155,7 +158,10 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 			remap.push_back(LandmarkObs{ observations[j].id, t_x, t_y });
 		}
 
-		//Data association for the predictions and transformed observations on current particle
+		/*
+        Data association for the predictions and transformed 
+        observations on current particle
+        */
 		dataAssociation(predictions, remap);
 
 		for(unsigned int j = 0; j < remap.size(); j++) {
