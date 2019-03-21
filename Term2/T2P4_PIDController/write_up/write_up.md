@@ -6,7 +6,7 @@ Final PID parameters were: {0.08,0.0006,2}
 
 Performance of the final PID parameters is decent, though there is a point on second to last turn where the front left tire contacts the painted section which could be improved.
 
-[Fulle run with the final parameters](Tuned_Run_Full.mp4)
+[Full run with the final parameters](Tuned_Run_Full.mp4)
 
 ### PID Tuning Explored
 

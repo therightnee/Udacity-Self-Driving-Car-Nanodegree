@@ -4,7 +4,7 @@ This project implemented a MPC based controller to develop a plan for the car, a
 
 Performance of the final MPC based controller with N  = 10, and dt = 0.05
 
-![alt text](mpc_run.mp4 "No hands with MPC.")
+[MPC run with N = 10, dt = 0.05](mpc_run.mp4)
 
 ### The Model
 
