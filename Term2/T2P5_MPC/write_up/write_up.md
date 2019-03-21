@@ -19,7 +19,7 @@ The actual vehicle model was also copied from the solution code, though f0 and p
 MPC::Solve is essentially identical to the function in MPC.cpp from the quizzes. I simply copied over the methods used to set the limits and start both the lower and upper bounds at the current value for that given variable. The output vector needed some modifcation as it need to scale depending on the size of N. Given that the first two entries are always the same, the vector is initialized with those values and then stuffed with the x/y values for the N points.
 
 
-###Latency
+### Latency
 
 These 6 inputs are bundled and sent to MPC::LatencyInjetor() which attempts to predict where the car will be in the near future, essentially integrating current values to return a likely future state. Steering angle, cross track error, and angle offset is similarly calculated, using the current steering angle, coupled with the turning radius of the car to help translate velocity to rate of change in the yaw axis. 
 
